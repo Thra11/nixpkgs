@@ -14094,7 +14094,7 @@ in
   qt512 = recurseIntoAttrs (makeOverridable
     (import ../development/libraries/qt-5/5.12) {
       inherit newScope;
-      inherit stdenv fetchurl fetchpatch fetchFromGitHub makeSetupHook makeWrapper;
+      inherit stdenv fetchurl fetchpatch fetchFromGitHub fetchgit makeSetupHook makeWrapper;
       inherit bison;
       inherit cups;
       inherit dconf;

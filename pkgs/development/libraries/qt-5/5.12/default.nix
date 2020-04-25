@@ -16,7 +16,7 @@ top-level attribute to `top-level/all-packages.nix`.
 
 {
   newScope,
-  stdenv, fetchurl, fetchpatch, fetchFromGitHub, makeSetupHook, makeWrapper,
+  stdenv, fetchurl, fetchpatch, fetchFromGitHub, fetchgit, makeSetupHook, makeWrapper,
   bison, cups ? null, harfbuzz, libGL, perl,
   gstreamer, gst-plugins-base, gtk3, dconf,
   llvmPackages_5,
@@ -35,6 +35,7 @@ let
 
   stdenvActual = if stdenv.cc.isClang then llvmPackages_5.stdenv else stdenv;
 
+  addons-srcs = import ./addons-srcs.nix { inherit fetchgit; mirror = "https://code.qt.io"; };
   mirror = "https://download.qt.io";
   srcs = import ./srcs.nix { inherit fetchurl; inherit mirror; } // {
     # Community port of the now unmaintained upstream qtwebkit.
@@ -47,7 +48,7 @@ let
       };
       version = "5.212-alpha-01-26-2018";
     };
-  };
+  } // addons-srcs;
 
   patches = {
     qtbase =
@@ -168,6 +169,8 @@ let
       qtwebview = callPackage ../modules/qtwebview.nix {};
       qtx11extras = callPackage ../modules/qtx11extras.nix {};
       qtxmlpatterns = callPackage ../modules/qtxmlpatterns.nix {};
+
+      qtmqtt = callPackage ../addons/qtmqtt.nix {};
 
       env = callPackage ../qt-env.nix {};
       full = env "qt-full-${qtbase.version}" ([
