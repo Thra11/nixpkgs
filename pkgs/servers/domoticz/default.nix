@@ -14,7 +14,8 @@
   curl,
   git,
   libusb-compat-0_1,
-  cereal
+  cereal,
+  openzwave
 }:
 
 let
@@ -37,6 +38,8 @@ stdenv.mkDerivation rec {
 
   src = domoticz-src;
 
+  patches = [ ./0001-OpenZWave-Include-parent-directory.patch ];
+
   postUnpack = ''
     cp -r ${minizip-src}/* $sourceRoot/extern/minizip
   '';
@@ -54,6 +57,7 @@ stdenv.mkDerivation rec {
     git
     libusb-compat-0_1
     cereal
+    openzwave
   ];
 
   nativeBuildInputs = [
@@ -72,6 +76,7 @@ stdenv.mkDerivation rec {
     "-DUSE_OPENSSL_STATIC=false"
     "-DUSE_STATIC_BOOST=false"
     "-DUSE_BUILTIN_MINIZIP=true"
+    "-DUSE_STATIC_OPENZWAVE=false"
   ];
 
   installPhase = ''

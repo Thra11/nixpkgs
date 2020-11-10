@@ -21,6 +21,11 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
+  NIX_CFLAGS_COMPILE = [
+    "-Wno-error=stringop-truncation"
+    "-Wno-error=maybe-uninitialized"
+  ];
+
   enableParallelBuilding = true;
 
   installPhase = ''
