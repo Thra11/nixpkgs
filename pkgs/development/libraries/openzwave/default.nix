@@ -2,20 +2,17 @@
 , doxygen, fontconfig, graphviz-nox, libxml2, pkg-config, which
 , systemd }:
 
-let
-  version = "2019-12-08";
-
-in stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "openzwave";
-  inherit version;
+  version = "2020-11-03";
 
   # Use fork by Home Assistant because this package is mainly used for python.pkgs.homeassistant-pyozw.
   # See https://github.com/OpenZWave/open-zwave/compare/master...home-assistant:hass for the difference.
   src = fetchFromGitHub {
-    owner = "home-assistant";
+    owner = "OpenZWave";
     repo = "open-zwave";
-    rev = "2cd2137025c529835e4893a7b87c3d56605b2681";
-    sha256 = "04g8fb4f4ihakvvsmzcnncgfdd2ikmki7s22i9c6layzdwavbwf1";
+    rev = "893e076a1a45af31bf8c69d321646ec5f770b270";
+    sha256 = "1695xzfy070rv50lcc9jqahl9g52h9rwp8s9xx1pgk5mmg27hhv8";
   };
 
   nativeBuildInputs = [ doxygen fontconfig graphviz-nox libxml2 pkg-config which ];
