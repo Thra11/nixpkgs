@@ -41,6 +41,7 @@ stdenv.mkDerivation rec {
   patches = [ ./0001-OpenZWave-Include-parent-directory.patch ];
 
   postUnpack = ''
+    find $sourceRoot -type f -print0 -name CMakeLists.txt | xargs -0 sed -i 's/include_directories\\(/target_include_directories\\(domoticz PRIVATE /g'
     cp -r ${minizip-src}/* $sourceRoot/extern/minizip
   '';
 

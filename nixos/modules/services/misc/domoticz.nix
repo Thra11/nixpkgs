@@ -38,6 +38,7 @@ in {
       after = [ "network-online.target" ];
       serviceConfig = {
         DynamicUser = true;
+        SupplementaryGroups = [ "dialout" ];
         StateDirectory = "domoticz";
         Restart = "always";
         ExecStart = ''
